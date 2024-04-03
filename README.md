@@ -291,6 +291,22 @@ roc_auc_score(Y_test, y_pred)
 
 practical 10-mongodb
 
+1)1.Create a database Institution ,Create a Collection Staff and Insert ten 
+documents in it with fields: empid,empname,salary and designation.
+
+use Institution
+db.Staff.insertMany([   {"empid": 1, "empname": "John", "salary": 60000, "designation": "Manager"},   {"empid": 2, "empname": "Alice", "salary": 55000, "designation": "Accountant"},   {"empid": 3, "empname": "Bob", "salary": 50000, "designation": "Manager"},   {"empid": 4, "empname": "Carol", "salary": 48000, "designation": "Accountant"},   {"empid": 5, "empname": "David", "salary": 45000, "designation": "Manager"},   {"empid": 6, "empname": "Eva", "salary": 43000, "designation": "Accountant"},   {"empid": 7, "empname": "Frank", "salary": 42000, "designation": "Manager"},   {"empid": 8, "empname": "Grace", "salary": 40000, "designation": "Accountant"},   {"empid": 9, "empname": "Harry", "salary": 38000, "designation": "Manager"},   {"empid": 10, "empname": "Ivy", "salary": 35000, "designation": "Accountant"}])
+db.Staff.find({}, {"_id": 0, "empid": 1, "designation": 1})
+db.Staff.find().sort({"salary": -1})
+db.Staff.find({ "$or": [{"designation": "Manager"}, {"salary": {"$gt": 50000}}] })
+db.Staff.updateMany({ "designation": "Accountant" }, { "$set": { "salary": 45000 } })
+db.Staff.deleteMany({ "salary": { "$gt": 100000 } })
+
+
+
+2)Create a database Institution .Create a Collection Student and Insert ten 
+documents in it with fields: RollNo,Name,Class and TotalMarks(out of 500).  
+
 use Institution
 db.createCollection("Student")
 db.Student.insertMany([
