@@ -289,7 +289,26 @@ from sklearn.metrics import roc_auc_score
 roc_auc_score(Y_test, y_pred)
 
 
+practical 10-mongodb
 
+use Institution
+db.createCollection("Student")
+db.Student.insertMany([
+  { "RollNo": 1, "Name": "John Doe", "Class": "MSc", "TotalMarks": 450 },
+  { "RollNo": 2, "Name": "Jane Smith", "Class": "BSc", "TotalMarks": 380 },
+  { "RollNo": 3, "Name": "Alice Johnson", "Class": "MSc", "TotalMarks": 420 },
+  { "RollNo": 4, "Name": "Bob Brown", "Class": "BSc", "TotalMarks": 390 },
+  { "RollNo": 5, "Name": "Emily Davis", "Class": "MSc", "TotalMarks": 480 },
+  { "RollNo": 6, "Name": "Michael Wilson", "Class": "BSc", "TotalMarks": 360 },
+  { "RollNo": 7, "Name": "Sarah Martinez", "Class": "MSc", "TotalMarks": 410 },
+  { "RollNo": 8, "Name": "David Anderson", "Class": "BSc", "TotalMarks": 500 },
+  { "RollNo": 9, "Name": "Laura Taylor", "Class": "MSc", "TotalMarks": 490 },
+  { "RollNo": 10, "Name": "Kevin Garcia", "Class": "BSc", "TotalMarks": 370 }
+])
+db.Student.find()
+db.Student.find().sort({ "TotalMarks": -1 })
+db.Student.find({ $or: [{ "Class": "MSc" }, { "TotalMarks": { $gt: 400 } }] })
+db.Student.deleteMany({ "TotalMarks": { $lt: 200 } })
 
 
 
