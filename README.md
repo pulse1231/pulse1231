@@ -3,15 +3,12 @@
 from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
 import wikipedia as wp
-
 result = wp.page("Computer Science")
 final_result = result.content
-
 def plot_wordcloud(wc):
     plt.imshow(wc)
     plt.axis("off")
     plt.show()
-
 wc = WordCloud(width=500, height=500, background_color="cyan", random_state=10, stopwords=STOPWORDS).generate(final_result)
 wc.to_file("cs.png")
 plot_wordcloud(wc)
@@ -19,34 +16,29 @@ plot_wordcloud(wc)
 PRACTICAL 2 
 AIM: Write a python program to perform Web Scrapping 
 1.HTML scrapping- use Beautiful Soup
+
 import pandas as pd
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
-
 url = "https://en.wikipedia.org/wiki/List_of_Asian_countries_by_area"
 page = urlopen(url)
 html_page = page.read().decode("utf-8")
 soup = BeautifulSoup(html_page, "html.parser")
 table = soup.find("table")
-
 SrNo = []
 Country = []
 Area = []
-
 rows = table.find("tbody").find_all("tr")
-
 for row in rows:
     cells = row.find_all("td")
     if cells:
         SrNo.append(cells[0].get_text().strip("\n"))  # strip extra characters
         Country.append(cells[1].get_text().strip("\xa0").strip("\n").strip("\[2]*"))  # strip extra characters
         Area.append(cells[2].get_text().strip("\n*").replace("\n", "").replace("•", ""))  # strip extra characters
-
 countries_df = pd.DataFrame()
 countries_df["SrNo"] = SrNo
 countries_df["Country"] = Country
 countries_df["Area"] = Area
-
 print(countries_df.head(10))
 
 2.JSON scrapping 
@@ -57,7 +49,6 @@ url = "https://jsonplaceholder.typicode.com/users"
 response = urllib.request.urlopen(url)
 data = json.loads(response.read())
 print(data)
-
 id1 = []
 username = []
 email = []
