@@ -289,7 +289,7 @@ from sklearn.metrics import roc_auc_score
 roc_auc_score(Y_test, y_pred)
 
 
-practical 10-mongodb
+practical 8-mongodb
 
 1)1.Create a database Institution ,Create a Collection Staff and Insert ten 
 documents in it with fields: empid,empname,salary and designation.
