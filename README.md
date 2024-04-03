@@ -242,11 +242,9 @@ y = pd.get_dummies(y, drop_first=True)
 print(y)
 
 from sklearn.model_selection import train_test_split
-
 x_train, x_test, Y_train, Y_test = train_test_split(x, y, random_state=1)
 
 from sklearn.neighbors import KNeighborsClassifier
-
 knn = KNeighborsClassifier(n_neighbors=5, metric="euclidean")
 knn.fit(x_train, Y_train)
 
