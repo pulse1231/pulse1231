@@ -1,3 +1,4 @@
+Data Science
 #practical 1.Write a python program to plot word cloud for a wikipedia page of any topic. 
 
 from wordcloud import WordCloud, STOPWORDS
@@ -324,6 +325,49 @@ db.Student.find().sort({ "TotalMarks": -1 })
 db.Student.find({ $or: [{ "Class": "MSc" }, { "TotalMarks": { $gt: 400 } }] })
 db.Student.deleteMany({ "TotalMarks": { $lt: 200 } })
 
+
+Cloud Computing.
+
+web feed practical.
+
+<p>Choose a Category</p>
+<form method="post" id="myform">
+    <select required name="rssurl">
+        <option value="http://timesofindia.indiatimes.com/rssfeedmostrecent.cms">Category 1</option>
+        <option value="http://timesofindia.indiatimes.com/rssfeedstopstories.cms">Category 2</option>
+        <option value="http://timesofindia.indiatimes.com/rssfeeds/913168846.cms">Category 3</option>
+    </select>
+    <input type="submit" value="Load"/>
+</form>
+
+<?php
+if(isset($_POST['rssurl'])) {
+    echo '<h1>Search Result for RSS url: ' . $_POST['rssurl'] . '</h1>';
+    $rssurl = $_POST['rssurl'];
+    $rss = new DOMDocument();
+    $rss->load($rssurl);
+    $feed = array();
+    foreach ($rss->getElementsByTagName('item') as $node) {
+        $item = array(
+            'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
+            'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
+            'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
+            'date' => $node->getElementsByTagName('pubDate')->item(0)->nodeValue
+        );
+        array_push($feed, $item);
+    }
+    $limit = 5;
+    for ($x = 0; $x < $limit && $x < count($feed); $x++) {
+        $title = str_replace('&amp;', '&', $feed[$x]['title']);
+        $link = $feed[$x]['link'];
+        $description = $feed[$x]['desc'];
+        $date = date('F d, Y', strtotime($feed[$x]['date']));
+        echo '<p><strong><a href="' . $link . '" title="' . $title . '">' . $title . '</a></strong></p>';
+        echo '<p>' . $description . '</p>';
+        echo '<small><em>Posted on ' . $date . '</em></small>';
+    }
+}
+?>
 
 
 
