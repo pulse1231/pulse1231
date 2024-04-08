@@ -326,49 +326,360 @@ db.Student.find({ $or: [{ "Class": "MSc" }, { "TotalMarks": { $gt: 400 } }] })
 db.Student.deleteMany({ "TotalMarks": { $lt: 200 } })
 
 
-Cloud Computing.
+Information Retrieval
 
-web feed practical.
+#practical 1
+#Write a python program to demonstrate bitwise operation. 
 
-<p>Choose a Category</p>
-<form method="post" id="myform">
-    <select required name="rssurl">
-        <option value="http://timesofindia.indiatimes.com/rssfeedmostrecent.cms">Category 1</option>
-        <option value="http://timesofindia.indiatimes.com/rssfeedstopstories.cms">Category 2</option>
-        <option value="http://timesofindia.indiatimes.com/rssfeeds/913168846.cms">Category 3</option>
-    </select>
-    <input type="submit" value="Load"/>
-</form>
+def bitwise_operations(a, b):
+    bitwise_and = a & b  # Bitwise AND operation
+    print("bitwise AND:", bitwise_and)    
+    bitwise_or = a | b  # Bitwise OR operation
+    print(f"bitwise OR: {bitwise_or}")
+    bitwise_xor = a ^ b  # Bitwise XOR operation
+    print(f"bitwise XOR: {bitwise_xor}")
+    bitwise_not_a = ~a  # Bitwise NOT operation for a
+    print(f"bitwise NOT of a: {bitwise_not_a}")
+    bitwise_not_b = ~b  # Bitwise NOT operation for b
+    print(f"bitwise NOT of b: {bitwise_not_b}")
+    bitwise_left = a << 1  # Bitwise LEFT-Shift operation
+    print(f"bitwise LEFT: {bitwise_left}")
+    bitwise_right = a >> 2  # Bitwise RIGHT-shift operation
+    print(f"bitwise RIGHT: {bitwise_right}")
+a = int(input("Enter the value of a: "))
+b = int(input("Enter the value of b: "))
+bitwise_operations(a, b)
 
-<?php
-if(isset($_POST['rssurl'])) {
-    echo '<h1>Search Result for RSS url: ' . $_POST['rssurl'] . '</h1>';
-    $rssurl = $_POST['rssurl'];
-    $rss = new DOMDocument();
-    $rss->load($rssurl);
-    $feed = array();
-    foreach ($rss->getElementsByTagName('item') as $node) {
-        $item = array(
-            'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
-            'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
-            'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
-            'date' => $node->getElementsByTagName('pubDate')->item(0)->nodeValue
-        );
-        array_push($feed, $item);
+#practical 1
+#method 2 Term Incidence Matrix
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+print("Boolean Retrieval Model Using Bitwise operations on Term Document Incidence Matrix")
+corpus = {'this is the first document',
+          'this document is the second document',
+          'and this is the third document',
+          'is this the first document?'}
+print("The corpus is: \n", corpus)
+vectorizer = CountVectorizer()
+x = vectorizer.fit_transform(corpus)
+df = pd.DataFrame(x.toarray(), columns=vectorizer.get_feature_names_out())
+print("The generated dataframe:")
+print(df)
+print("Query processing on the term document incidence matrix")
+# AND
+print("Find all document ids for query 'this' AND 'first'")
+alldata = df[(df['this'] == 1) & (df['first'] == 1)]
+print("Document ids where 'this' AND 'first' are present are:", alldata.index.tolist())
+# OR
+print("Find all document ids for query 'this' OR 'first'")
+alldata = df[(df['this'] == 1) | (df['first'] == 1)]
+print("Document ids where 'this' OR 'first' are present are:", alldata.index.tolist())
+# NOT
+print("Find all document ids for query 'and' is not present")
+alldata = df[(df['and'] != 1)]
+print("Document ids where 'and' term is not present are:", alldata.index.tolist())
+# XOR
+print("Find all document ids for query 'this' XOR 'first'")
+alldata = df[(df['this'] == 1) ^ (df['first'] == 1)]
+print("Document ids where 'this' XOR 'first' are present are:", alldata.index.tolist())
+
+#practical 2 Method 1
+#AIM: Implement Page Rank Algorithm. 
+
+
+import networkx as nx
+import matplotlib.pyplot as plt
+G = nx.DiGraph()
+G.add_nodes_from(["A", "B", "C", "D", "E", "F", "G"])
+G.add_edges_from([("G", "A"), ("A", "G"), ("B", "A"), ("A", "D"), ("D", "B"), ("A", "C"), ("C", "A"), ("D", "F"), ("F", "A"), ("E", "A")])
+ppr1 = nx.pagerank(G)
+print("Page rank values:", ppr1)
+pos = nx.spiral_layout(G)
+nx.draw_networkx(G, pos, with_labels=True, node_color="#f86e00")
+plt.show()
+
+#practical 2
+#METHOD 2 
+#Implementation of PageRank using NetworkX CODE 
+
+import networkx as nx
+import matplotlib.pyplot as plt
+G = nx.DiGraph()
+[G.add_node(k) for k in ["A", "B", "C"]]
+G.add_weighted_edges_from([('A', 'B', 1), ('A', 'C', 1), ('C', 'A', 1), ('B', 'C', 1)])
+ppr1 = nx.pagerank(G)
+print("Page rank values:", ppr1)
+pos = nx.spiral_layout(G)
+nx.draw_networkx(G, pos, with_labels=True, node_color="#f86e00")
+plt.show()
+
+#practical 2
+#method 3
+
+def page_rank(graph, damping_factor=0.85, max_iterations=100, tolerance=1e-6):
+    num_pages = len(graph)
+    initial_page_rank = 1.0 / num_pages
+    page_ranks = {page: initial_page_rank for page in graph} 
+    for _ in range(max_iterations):
+        new_page_ranks = {}
+        for page in graph:
+            new_rank = (1 - damping_factor) / num_pages
+            for link in graph:
+                if page in graph[link]:
+                    new_rank += damping_factor * (page_ranks[link] / len(graph[link]))
+            new_page_ranks[page] = new_rank       
+        convergence = all(abs(new_page_ranks[page] - page_ranks[page]) < tolerance for page in graph)             
+        page_ranks = new_page_ranks
+        if convergence:
+            break
+    return page_ranks
+if __name__ == "__main__":
+    example_graph = {
+        'A': ['B', 'C'],
+        'B': ['A'],
+        'C': ['A', 'B'],
+        'D': ['B']
     }
-    $limit = 5;
-    for ($x = 0; $x < $limit && $x < count($feed); $x++) {
-        $title = str_replace('&amp;', '&', $feed[$x]['title']);
-        $link = $feed[$x]['link'];
-        $description = $feed[$x]['desc'];
-        $date = date('F d, Y', strtotime($feed[$x]['date']));
-        echo '<p><strong><a href="' . $link . '" title="' . $title . '">' . $title . '</a></strong></p>';
-        echo '<p>' . $description . '</p>';
-        echo '<small><em>Posted on ' . $date . '</em></small>';
-    }
-}
-?>
+    result = page_rank(example_graph)
+    for page, rank in sorted(result.items(), key=lambda x: x[1], reverse=True):
+        print(f"Page: {page} - PageRank: {rank:4f}")
 
+#practical 3
+#AIM: Write a program to implement Levenshtein Distance. 
+
+def leven(x, y):
+    n = len(x)
+    m = len(y)
+    A = [[i + j for j in range(m + 1)] for i in range(n + 1)]
+    for i in range(n):
+        for j in range(m):
+            A[i + 1][j + 1] = min(
+                A[i][j + 1] + 1,
+                A[i + 1][j] + 1,
+                A[i][j] + int(x[i] != y[j])
+            )
+    return A[n][m]
+print(leven("brap", "rap"))
+print(leven("trial", "try"))
+print(leven("horse", "force"))
+print(leven("rose", "erode"))
+
+
+#practical 4
+#AIM: Write a program to Compute Similarity between two text documents
+#Jaccard similarity method 1
+import spacy
+from spacy import en_core_web_sm
+nlp = spacy.load('en_core_web_sm')
+doc1 = nlp(u'Hello hi there!')
+doc2 = nlp(u'Hello hi there!')
+doc3 = nlp(u'Hey whatsup?')
+print(doc1.similarity(doc2))
+print(doc2.similarity(doc3))
+print(doc1.similarity(doc3))
+
+
+#practical 4
+#Jaccard similarity method 2
+
+def jaccard_Similarity(doc1, doc2):
+    # Convert documents to sets of lowercase words
+    words_doc1 = set(doc1.lower().split())
+    words_doc2 = set(doc2.lower().split()) 
+    # Calculate intersection and union of the two sets
+    intersection = words_doc1.intersection(words_doc2)
+    union = words_doc1.union(words_doc2) 
+    # Calculate Jaccard similarity and return as a float
+    return float(len(intersection)) / len(union)
+# Define the documents
+doc_1 = "Data is the new oil of the digital economy"
+doc_2 = "Data is a new oil"
+# Calculate and print the Jaccard similarity
+print(jaccard_Similarity(doc_1, doc_2))
+
+#Practical 4
+#METHOD 3: COSINE SIMILARITY 
+
+
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
+doc_1 = "Data is the new oil of the digital economy"
+doc_2 = "Data is a new oil"
+data = [doc_1, doc_2]
+# Initialize TfidfVectorizer
+Tfidf_vect = TfidfVectorizer()
+# Transform the data into TF-IDF matrix
+vector_matrix = Tfidf_vect.fit_transform(data)
+# Get the tokens (features)
+tokens = Tfidf_vect.get_feature_names_out()
+# Calculate cosine similarity matrix
+cosine_similarity_matrix = cosine_similarity(vector_matrix)
+# Print the cosine similarity matrix along with the document names
+print(cosine_similarity_matrix, ['doc_1', 'doc_2'])
+
+
+#practical 5
+#AIM: Write a Map Reduce Program to count the number of occurrences of each alphabetic character in a given dataset
+
+from functools import reduce
+from collections import defaultdict
+def mapper(data):
+    char_count = defaultdict(int)
+    for char in data:
+        if char.isalpha():
+            char_count[char.lower()] += 1
+    return char_count.items()
+def reducer(counts1, counts2):
+    merged_counts = defaultdict(int)
+    for char, count in counts1:
+        merged_counts[char] += count
+    for char, count in counts2:
+        merged_counts[char] += count
+    return merged_counts.items()
+if __name__ == "__main__":
+    dataset = "Hello, world! This is a MapReduce example."
+    chunks = [chunk for chunk in dataset.split()]
+    # Map phase
+    mapped_result = map(mapper, chunks)
+    # Reduce phase
+    final_counts = reduce(reducer, mapped_result)
+    # Output
+    for char, count in final_counts:
+        print(f"Character: {char}, Count: {count}")
+
+
+#practical 6
+#AIM: HITS Algorithm 
+
+import networkx as nx
+# Step 2: Create a graph and add edges
+G = nx.DiGraph()
+G.add_edges_from([(1, 2), (1, 3), (2, 4), (3, 4), (4, 5)])
+# Step 3: Calculate the HITS scores
+authority_scores, hub_scores = nx.hits(G)
+# Step 4: Print the scores
+print("Authority Scores:", authority_scores)
+print("Hub Scores:", hub_scores)
+
+
+#practical 7
+#AIM: Write a python program for pre-processing of text document stopword removal. 
+#step 1
+
+import nltk
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+print(set(stopwords.words('english')))
+import nltk
+
+
+#practical 7
+#step 2
+
+
+nltk.download('punkt')
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+example = "This is a sample sentence, showing off the stopwords filtration."
+stop_words = set(stopwords.words('english'))
+word_tokens = word_tokenize(example)
+filtered_sentence = [w for w in word_tokens if not w in stop_words]
+print("Original Sentence:", word_tokens)
+print("Filtered Sentence:", filtered_sentence)
+
+
+#practical 8
+#AIM:Write a program for mining twitter to identify tweets for a specific period and identify trends and named entities
+#step 1
+
+import pandas as pd
+from ntscraper import Nitter
+scraper = Nitter()
+tweets = scraper.get_tweets('narendramodi', mode='user', number=5)
+
+#practical 8
+#step 2
+
+final_tweets = []
+for tweet in tweets['tweets']:
+    data = [tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'], tweet['stats']['comments']]
+    final_tweets.append(data)
+df = pd.DataFrame(final_tweets, columns=['Link', 'Text', 'Date', 'Likes', 'Comments'])
+print(df)
+
+#practical 8
+#step 3
+
+data = pd.DataFrame(final_tweets, columns=['link', 'text', 'date', 'Number of likes', 'Number of tweets'])
+print(data)
+
+#practical 9
+#AIM: Write a program to implement simple web crawling. 
+
+import requests
+from parsel import Selector
+import time
+start = time.time()
+response = requests.get('http://recurship.com/')
+selector = Selector(response.text)
+href_links = selector.xpath('//a/@href').getall()
+image_links = selector.xpath('//img/@src').getall()
+print("***********Href_links***********")
+print(href_links)
+print("***********/href_links***********")
+print(image_links)
+print("***********/image_links***********")
+end = time.time()
+print("Time Taken in seconds:", (end - start))
+
+
+#practical 10
+#AIM: Write a python program to parse XML text, generate Web graph and compute topic specific page rank.  
+
+import xml.etree.ElementTree as ET
+import networkx as nx
+def parse_xml(xml_text):
+    root = ET.fromstring(xml_text)
+    return root
+def generate_web_graph(xml_root):
+    G = nx.DiGraph()
+    for page in xml_root.findall('.//page'):
+        page_id = page.find('id').text
+        G.add_node(page_id)
+        links = page.findall('.//link')
+        for link in links:
+            target_page_id = link.text
+            G.add_edge(page_id, target_page_id)
+    return G
+def compute_topic_specific_pagerank(graph, topic_nodes, alpha=0.85, max_iter=100, tol=1e-6):
+    personalization = {node: 1.0 if node in topic_nodes else 0.0 for node in graph.nodes}
+    return nx.pagerank(graph, alpha=alpha, personalization=personalization, max_iter=max_iter, tol=tol)
+if __name__ == "__main__":
+    xml_data = """
+    <webgraph>
+        <page>
+            <id>1</id>
+            <link>2</link>
+            <link>3</link>
+        </page>
+        <page>
+            <id>2</id>
+            <link>1</link>
+            <link>3</link>
+        </page>
+        <page>
+            <id>3</id>
+            <link>1</link>
+            <link>2</link>
+        </page>
+    </webgraph>"""
+    xml_root = parse_xml(xml_data)
+    web_graph = generate_web_graph(xml_root)
+    topic_specific_pagerank = compute_topic_specific_pagerank(web_graph, topic_nodes=['1', '2'])
+    print("Topic Specific PageRank:")
+    for node, score in sorted(topic_specific_pagerank.items(), key=lambda x: x[1], reverse=True):
+        print(f"Node: {node} - PageRank: {score:.4f}")
 
 
 
