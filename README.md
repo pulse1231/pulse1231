@@ -58,12 +58,10 @@ for item in data:
         id1.append(item["id"])
     else:
         id1.append("NA")
-
     if "username" in item.keys():  # check if 'username' is present in dictionary
         username.append(item["username"])
     else:
         username.append("NA")
-
     if "email" in item.keys():  # check if 'email' is present in dictionary
         email.append(item["email"])
     else:
