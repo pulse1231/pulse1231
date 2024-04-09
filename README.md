@@ -459,50 +459,40 @@ print(leven("horse", "force"))
 print(leven("rose", "erode"))
 
 
-#practical 4
-#AIM: Write a program to Compute Similarity between two text documents
-#Jaccard similarity method 1
-import spacy
-from spacy import en_core_web_sm
-nlp = spacy.load('en_core_web_sm')
-doc1 = nlp(u'Hello hi there!')
-doc2 = nlp(u'Hello hi there!')
-doc3 = nlp(u'Hey whatsup?')
-print(doc1.similarity(doc2))
-print(doc2.similarity(doc3))
-print(doc1.similarity(doc3))
 
 
 #practical 4
-#Jaccard similarity method 2
+#Jaccard similarity 
 
-def jaccard_Similarity(doc1, doc2):
-    # Convert documents to sets of lowercase words
-    words_doc1 = set(doc1.lower().split())
-    words_doc2 = set(doc2.lower().split()) 
-    # Calculate intersection and union of the two sets
-    intersection = words_doc1.intersection(words_doc2)
-    union = words_doc1.union(words_doc2) 
-    # Calculate Jaccard similarity and return as a float
-    return float(len(intersection)) / len(union)
-doc_1 = "Data is the new oil of the digital economy"
-doc_2 = "Data is a new oil"
+def Jaccard_Similarity(doc1,doc2):
+    # List  the unique words in a document
+    words_doc1=set(doc1.lower().split())
+    words_doc2=set(doc2.lower().split())
+    intersection=words_doc1.intersection(words_doc2)
+    union=words_doc1.union(words_doc2)
+    return float(len(intersection))/len(union)
+doc1="Data is the new oil of the digital economy"
+doc2="Data is the new oil"
+Jaccard_Similarity(doc1,doc2)
+
 print(jaccard_Similarity(doc_1, doc_2))
 
 #Practical 4
-#METHOD 3: COSINE SIMILARITY 
+COSINE SIMILARITY 
 
 
-from sklearn.metrics.pairwise import cosine_similarity
+doc1 = "Data is the new oil of the digital economy"
+doc2 = "Data is the new oil"
+data = [doc1, doc2]
 from sklearn.feature_extraction.text import TfidfVectorizer
-doc_1 = "Data is the new oil of the digital economy"
-doc_2 = "Data is a new oil"
-data = [doc_1, doc_2]
-Tfidf_vect = TfidfVectorizer()
-vector_matrix = Tfidf_vect.fit_transform(data)
-tokens = Tfidf_vect.get_feature_names_out()
+from sklearn.metrics.pairwise import cosine_similarity
+vectorizer = TfidfVectorizer()
+vector_matrix = vectorizer.fit_transform(data)
+tokens = vectorizer.get_feature_names_out()
+create_dataframe = (vector_matrix.toarray(), tokens)
 cosine_similarity_matrix = cosine_similarity(vector_matrix)
-print(cosine_similarity_matrix, ['doc_1', 'doc_2'])
+create_dataframe = cosine_similarity_matrix[0, 1]
+print(create_dataframe)
 
 
 #practical 5
@@ -554,13 +544,13 @@ import nltk
 nltk.download('stopwords')
 from nltk.corpus import stopwords
 print(set(stopwords.words('english')))
-import nltk
+
 
 
 #practical 7
 #step 2
 
-
+import nltk
 nltk.download('punkt')
 nltk.download('stopwords')
 from nltk.corpus import stopwords
@@ -577,6 +567,7 @@ print("Filtered Sentence:", filtered_sentence)
 #AIM:Write a program for mining twitter to identify tweets for a specific period and identify trends and named entities
 #step 1
 
+!pip install ntscraper
 import pandas as pd
 from ntscraper import Nitter
 scraper = Nitter()
@@ -585,18 +576,18 @@ tweets = scraper.get_tweets('narendramodi', mode='user', number=5)
 #practical 8
 #step 2
 
-final_tweets = []
+final_tweets=[]
 for tweet in tweets['tweets']:
-    data = [tweet['link'], tweet['text'], tweet['date'], tweet['stats']['likes'], tweet['stats']['comments']]
+    data=[tweet['link'],tweet['text'],tweet['date'],tweet['stats']['likes'],tweet['stats']['comments']]
     final_tweets.append(data)
-df = pd.DataFrame(final_tweets, columns=['Link', 'Text', 'Date', 'Likes', 'Comments'])
-print(df)
+print(final_tweets)
+
 
 #practical 8
 #step 3
-
-data = pd.DataFrame(final_tweets, columns=['link', 'text', 'date', 'Number of likes', 'Number of tweets'])
+data=pd.DataFrame(final_tweets,columns=['link','text','date','Number of likes','Number of tweets'])
 print(data)
+
 
 #practical 9
 #AIM: Write a program to implement simple web crawling. 
