@@ -364,19 +364,15 @@ df = pd.DataFrame(x.toarray(), columns=vectorizer.get_feature_names_out())
 print("The generated dataframe:")
 print(df)
 print("Query processing on the term document incidence matrix")
-# AND
 print("Find all document ids for query 'this' AND 'first'")
 alldata = df[(df['this'] == 1) & (df['first'] == 1)]
 print("Document ids where 'this' AND 'first' are present are:", alldata.index.tolist())
-# OR
 print("Find all document ids for query 'this' OR 'first'")
 alldata = df[(df['this'] == 1) | (df['first'] == 1)]
 print("Document ids where 'this' OR 'first' are present are:", alldata.index.tolist())
-# NOT
 print("Find all document ids for query 'and' is not present")
 alldata = df[(df['and'] != 1)]
 print("Document ids where 'and' term is not present are:", alldata.index.tolist())
-# XOR
 print("Find all document ids for query 'this' XOR 'first'")
 alldata = df[(df['this'] == 1) ^ (df['first'] == 1)]
 print("Document ids where 'this' XOR 'first' are present are:", alldata.index.tolist())
@@ -489,10 +485,8 @@ def jaccard_Similarity(doc1, doc2):
     union = words_doc1.union(words_doc2) 
     # Calculate Jaccard similarity and return as a float
     return float(len(intersection)) / len(union)
-# Define the documents
 doc_1 = "Data is the new oil of the digital economy"
 doc_2 = "Data is a new oil"
-# Calculate and print the Jaccard similarity
 print(jaccard_Similarity(doc_1, doc_2))
 
 #Practical 4
@@ -504,15 +498,10 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 doc_1 = "Data is the new oil of the digital economy"
 doc_2 = "Data is a new oil"
 data = [doc_1, doc_2]
-# Initialize TfidfVectorizer
 Tfidf_vect = TfidfVectorizer()
-# Transform the data into TF-IDF matrix
 vector_matrix = Tfidf_vect.fit_transform(data)
-# Get the tokens (features)
 tokens = Tfidf_vect.get_feature_names_out()
-# Calculate cosine similarity matrix
 cosine_similarity_matrix = cosine_similarity(vector_matrix)
-# Print the cosine similarity matrix along with the document names
 print(cosine_similarity_matrix, ['doc_1', 'doc_2'])
 
 
@@ -550,12 +539,9 @@ if __name__ == "__main__":
 #AIM: HITS Algorithm 
 
 import networkx as nx
-# Step 2: Create a graph and add edges
 G = nx.DiGraph()
 G.add_edges_from([(1, 2), (1, 3), (2, 4), (3, 4), (4, 5)])
-# Step 3: Calculate the HITS scores
 authority_scores, hub_scores = nx.hits(G)
-# Step 4: Print the scores
 print("Authority Scores:", authority_scores)
 print("Hub Scores:", hub_scores)
 
