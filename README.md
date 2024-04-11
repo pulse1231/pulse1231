@@ -13,7 +13,7 @@ nmap -p22,113,139 scanme.nmap.org
 nmap -sF -T4 para
 
 4)NULL Scan (-sN)
-nmap –sN –p 22 scanme.nmap.org
+nmap -sN -p 22 scanme.nmap.org
 
 5)XMAS Scan (-sX) 
 nmap -sX -T4 scanme.nmap.org
